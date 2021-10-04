@@ -24,7 +24,7 @@ class REST {
         });        
 
         let data = await result.json();
-        console.log(data);
+        // console.log(data);
         cbFunc(data);
     }
 
@@ -63,11 +63,18 @@ class REST {
     }
 
     async getTrans(direction, cbFunc){
-        let uri = "";
+        let uri = "http://cashview.000webhostapp.com/get_transactions.php";
+        let cur_time = new Date();
+        let loc_month = cur_time.getMonth() + 1;
+        let loc_year = cur_time.getFullYear();
         let raw = await fetch(uri, {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({'direction': direction})
+            body: JSON.stringify({
+                'direction': direction,
+                'year': loc_year,
+                'month': loc_month
+            })
         });
 
         let data = await raw.json();

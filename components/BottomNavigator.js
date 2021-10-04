@@ -2,8 +2,9 @@ import * as React from 'react';
 import { BottomNavigation, Text } from 'react-native-paper';
 
 import HomeScreen from '../screens/HomeScreen';
+import { InTransactions } from '../screens/InTransactions';
 
-const InRoute = () => <Text>In Trans</Text>;
+const InRoute = InTransactions;
 const HomeRoute = HomeScreen;
 const OutRoute = () => <Text>Out Trans</Text>;
 

@@ -38,7 +38,7 @@ export function HomeListView(props) {
 const styles = StyleSheet.create({
      
   container: {
-    flex: 1,
+    /* flex: 1,*/
     width: barWidth,
     backgroundColor: '#FFF',
     marginTop: 10,

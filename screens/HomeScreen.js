@@ -1,11 +1,12 @@
 import * as React from 'react';
-import {SafeAreaView, View, TouchableOpacity, Image, Text, StyleSheet} from 'react-native';
+import {SafeAreaView, View, TouchableOpacity, Image, Text, StyleSheet, ScrollView, StatusBar} from 'react-native';
 import {ProgressBar, Colors } from 'react-native-paper';
 
 //user defined libraries
 import { REST } from '../utils/REST';
 
 import { HomeListView } from '../components/HomeListView';
+import { AllList } from '../components/AllList';
 // import ModalChanger  from "../components/ModalChanger";
 import { Divider } from "../components/Divider";
 // import ProgressBar from '../components/ProgressBar';
@@ -76,16 +77,23 @@ class HomeScreen extends React.Component{
       const prep = this.state.data.data;
       const cash_hand = prep.in.sum_num - prep.out.sum_num;
       const percent = (100 - (prep.out.sum_num * 100) / prep.in.sum_num)/100;
-      console.log('percent: ' + percent)
+      // console.log('percent: ' + percent)
       return(
         <View>
-          <ProgressBar style={styles.progressBar} progress={percent} color={Colors.red800} ></ProgressBar> 
+          <Divider text={'Общее'} textWidth = {70} />
+          <ProgressBar style={styles.progressBar} progress={percent} color={Colors.green300} ></ProgressBar> 
           <View style={styles.text_container}>
             <Text style={styles.text_hand}>{'Остаток: ' + cash_hand}</Text>
             <Text style={styles.text_all}>{'Всего с начала месяца: ' + prep.in.sum_num}</Text>
           </View>
+          <Divider text={'Группы'} textWidth = {70} />
+          <View>
+            <AllList style={styles.container_list} items={this.state.data} isInput={false}></AllList>
+            {/*<HomeListView data={this.state.data} isInput={false}/>*/}
+          </View>
         </View>
         );
+
           {/*<Divider text={'Общее'} textWidth = {70} />
           <View style={styles.container}>
               <Text style={styles.label}>
@@ -100,8 +108,6 @@ class HomeScreen extends React.Component{
           </View>
           <Divider text={'Все группы'} textWidth = {70} />
           <HomeListView data={this.state.data} isInput={false}/>
-          */}
-          {/*
           <TouchableOpacity
             activeOpacity={0.7}
             onPress={() => {this.changeModal()}}
@@ -114,40 +120,35 @@ class HomeScreen extends React.Component{
               style={styles.floatingButtonStyle}
             />
           </TouchableOpacity>
-            */}
+          */}
       ;
     }
 
     render(){
       return(
-        <SafeAreaView style={styles.container}>
+        <ScrollView style={styles.container}>
           {this.renderContent()}
-        </SafeAreaView>
+        </ScrollView>
       );
     }
 }
 
 const styles = StyleSheet.create({
   container:{
-    display: 'flex',
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    paddingTop: StatusBar.currentHeight,
     marginTop: "auto",
     marginBottom: "auto",
     marginHorizontal: 5
   },
   progressBar:{
-    display: 'flex',
-    minWidth: '100%',
-    height: 15
+    height: 15,
+    marginTop: 5 /* -15 */
   },
 
   text_container:{
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    /* minWidth: '100%', */
   },
   
   text_all:{
@@ -155,8 +156,14 @@ const styles = StyleSheet.create({
   },
   text_hand:{
     alignSelf:'flex-start'
-  }
+  },
   
+  container_list:{
+    /*display: 'flex',*/
+    height:'50%',
+    marginTop: 10
+  }
+
 })
 
 const styles_old = StyleSheet.create({
